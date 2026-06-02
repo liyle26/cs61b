@@ -4,106 +4,95 @@ import java.util.Iterator;
 
 public class ArrayDeque<T> implements Deque<T>,Iterable<T>{
 
-    private Object[] elements; // 底层数组
+    private T[] elements; // 底层数组
     private int head;          // 队头指针
     private int tail;          // 队尾指针
     private int capacity;      // 容量
+    private int size;
     public ArrayDeque()
     {
             head=0;
             tail=0;
+            size=0;
             capacity=100;
-            elements=new Object[100];
+            elements= (T[]) new Object[100];
     }
 
-    public void resize(int s)
+    public void resize(int newCap)
     {
-        this.capacity=s;
-            T[] newarray=(T[]) new Object[s];
-            for(int i=0;i<=tail-1;i++)
-            {
-                newarray[i]= (T) elements[i];
-            }
-            for(int i=capacity-1;i>=head+1;i--)
-            {
-                if(head==capacity)
-                {
-                    break;
-                }
-               newarray[i]= (T) elements[i-capacity/2];
-            }
-            elements=newarray;
+        T[] newArr = (T[]) new Object[newCap];
+        for (int i = 0; i < size; i++) {
+            newArr[i] = elements[(head + i) % elements.length];
+        }
+        elements = newArr;
+        head = 0;
+        tail = size;
     }
 
 
     @Override
     public void addFirst(T t){
-            if(head==tail){
-                resize(2*capacity);
-                head=(head-1+capacity)%capacity;
-                elements[head]=t;
-            }
-        head=(head-1+capacity)%capacity;
-        elements[head]=t;
+        if (size == elements.length) {
+            resize(2 * elements.length);
+        }
+        head = (head - 1 + elements.length) % elements.length;
+        elements[head] = t;
+        size++;
     }
 
     @Override
     public void addLast(T t) {
-        if(head==tail){
-            resize(2*capacity);
-            elements[tail]=t;
-            head=(head+1-capacity)%capacity;
+        if (size == elements.length) {
+            resize(2 * elements.length);
         }
-        elements[tail]=t;
-        head=(head+1-capacity)%capacity;
+        elements[tail] = t;
+        tail = (tail + 1) % elements.length;
+        size++;
     }
 
     @Override
     public boolean isEmpty() {
-        for(int i=0;i<=capacity-1;i++){
-            if(elements[i]!=null){
-                return false;
-            }
-        }
-        return true;
+        return size == 0;
     }
 
     @Override
     public int size() {
-        return capacity;
+        return size;
     }
 
     @Override
     public void printDeque() {
-        int curr=head;
-        while(curr!=tail)
-        {
-            curr=(curr+1-capacity)%capacity;
-            System.out.print(elements[curr]+" ");
+        for (int i = 0; i < size; i++) {
+            System.out.print(elements[(head + i) % elements.length] + " ");
         }
+        System.out.println();
     }
 
     @Override
     public T removeFirst() {
-        head=(head+1-capacity)%capacity;
-        return (T) elements[head];
+        if (isEmpty()) return null;
+        T res = elements[head];
+        elements[head] = null;
+        head = (head + 1) % elements.length;
+        size--;
+        return res;
     }
 
     @Override
     public T removeLast() {
-        tail=(tail-1+capacity)%capacity;
-        return (T) elements[tail];
+        if (isEmpty()) return null;
+        tail = (tail - 1 + elements.length) % elements.length;
+        T res = elements[tail];
+        elements[tail] = null;
+        size--;
+        return res;
     }
+
 
     @Override
     public T get(int index) {
-        if(index+1>capacity-head+1+tail){
-            return null;
-        } else if (index+1<=capacity+1-head) {
-            return (T) elements[head+index];
-        }else {
-            return (T) elements[index-capacity+head-1];
-        }
+        if (index < 0 || index >= size) return null;
+        return elements[(head + index) % elements.length];
     }
 
     @Override
