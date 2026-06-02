@@ -13,8 +13,6 @@ public class LinkedListDeque<T> implements Deque<T>,Iterable<T> {
             item = i;
             next = n;
             prev = p;
-            n.prev = this;
-            n.next = p;
         }
     }
 
@@ -45,13 +43,19 @@ public class LinkedListDeque<T> implements Deque<T>,Iterable<T> {
 
     @Override
     public void addFirst(T item) {
+        node second=dummy.next;
         node first = new node(item, dummy.next, dummy);
+        dummy.next=first;
+        second.prev=first;
         size++;
     }
 
     @Override
     public void addLast(T item) {
+        node lastse=dummy.prev;
         node last = new node(item, dummy, dummy.prev);
+        lastse.next=last;
+        dummy.prev=last;
         size++;
     }
 
@@ -84,6 +88,7 @@ public class LinkedListDeque<T> implements Deque<T>,Iterable<T> {
         } else {
             T item = dummy.next.item;
             dummy.next = dummy.next.next;
+            dummy.next.prev=dummy;
             size--;
             return item;
         }
@@ -96,6 +101,7 @@ public class LinkedListDeque<T> implements Deque<T>,Iterable<T> {
         } else {
             T item = dummy.prev.item;
             dummy.prev = dummy.prev.prev;
+            dummy.prev.next=dummy;
             size--;
             return item;
         }
