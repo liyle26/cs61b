@@ -1,7 +1,9 @@
 package Dog;
 
 import static org.junit.Assert.*;
-import org.junit.Test;
+import static org.testng.AssertJUnit.assertEquals;
+
+import org.testng.annotations.Test;
 
 public class DogTest {    
     @Test

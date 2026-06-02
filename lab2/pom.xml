@@ -4,16 +4,38 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>CS61B</groupId>
-        <artifactId>61BMasterPom</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <relativePath>../library-sp21/javalib/masterpom.xml</relativePath>
-    </parent>
-
     <groupId>CS61B</groupId>
-    <artifactId>lab2</artifactId>
+    <artifactId>lab2setup</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <!-- Jama -->
+        <dependency>
+            <groupId>gov.nist.math</groupId>
+            <artifactId>jama</artifactId>
+            <version>1.0.3</version>
+        </dependency>
+
+        <!-- JUnit 4（CS61B 用的是这个版本） -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <sourceDirectory>${project.basedir}</sourceDirectory>
@@ -22,23 +44,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>1.9</source>
-                    <target>1.9</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <compilerArgs>
-                        <arg>-J-XX:+ShowCodeDetailsInExceptionMessages</arg>
-                    </compilerArgs>
+                    <source>17</source>
+                    <target>17</target>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-    
 </project>

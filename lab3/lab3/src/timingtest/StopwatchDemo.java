@@ -17,7 +17,7 @@ public class StopwatchDemo {
         return fib(n - 1) + fib(n - 2);
     }
 
-    public static void main(String[] args) {
+    public static  void main(String[] args) {
         Stopwatch sw = new Stopwatch();
         int fib41 = fib(41);
         double timeInSeconds = sw.elapsedTime();
